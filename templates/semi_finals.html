@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% block title %}{{ site.title }} • Semi Finals{% endblock %}
+
+{% block content %}
+<section class="page-hero glass-card gold-edge">
+  <div class="card-label hero-label">Knockout Schedule</div>
+  <h1 class="poster-title heading-font">Semi Finals</h1>
+  <p class="copy">
+    The final four arrive with contrasting styles, but equal ambition.
+    Two fixtures. One day. A direct route to the title match.
+  </p>
+</section>
+
+<div class="semi-finals-grid">
+  {% for semi in site.semi_finals %}
+  <article class="glass-card semi-card">
+
+    <div class="match-top">
+      <div>
+        <div class="card-label">{{ semi.name }}</div>
+        <h2 class="heading-font match-heading">{{ semi.team1 }} vs {{ semi.team2 }}</h2>
+      </div>
+      <span class="status-pill">{{ semi.slot }}</span>
+    </div>
+
+    <div class="semi-matchup">
+      <div class="team-block">
+        <img
+          src="{{ url_for('static', filename=semi.team1_logo) }}"
+          alt="{{ semi.team1 }} logo"
+          class="team-logo"
+        >
+        <div class="team-name">{{ semi.team1 }}</div>
+      </div>
+
+      <div class="vs-block heading-font">VS</div>
+
+      <div class="team-block">
+        <img
+          src="{{ url_for('static', filename=semi.team2_logo) }}"
+          alt="{{ semi.team2 }} logo"
+          class="team-logo"
+        >
+        <div class="team-name">{{ semi.team2 }}</div>
+      </div>
+    </div>
+
+    <div class="semi-meta-grid">
+      <div class="sub-card">
+        <div class="card-label">Date</div>
+        <div class="fixture-main">{{ semi.date_line }}</div>
+      </div>
+
+      <div class="sub-card">
+        <div class="card-label">Venue</div>
+        <div class="fixture-main">{{ semi.venue }}</div>
+      </div>
+
+      <div class="sub-card">
+        <div class="card-label">Toss</div>
+        <div class="fixture-main">{{ semi.toss_time }}</div>
+      </div>
+
+      <div class="sub-card">
+        <div class="card-label">Start</div>
+        <div class="fixture-main">{{ semi.start_time }}</div>
+      </div>
+
+      <div class="sub-card">
+        <div class="card-label">Match Code</div>
+        <div class="fixture-main">{{ semi.match_code }}</div>
+      </div>
+
+      <div class="sub-card">
+        <div class="card-label">Format</div>
+        <div class="fixture-main">{{ semi.overs }} • {{ semi.ball_type }}</div>
+      </div>
+    </div>
+
+    <div class="path-block sub-card">
+      <div class="card-label">Path</div>
+      <div class="fixture-meta">{{ semi.path }}</div>
+    </div>
+
+    {% if semi.banner %}
+    <div class="semi-banner-wrap">
+      <img
+        src="{{ url_for('static', filename=semi.banner) }}"
+        alt="{{ semi.name }} banner"
+        class="semi-banner"
+      >
+    </div>
+    {% endif %}
+
+  </article>
+  {% endfor %}
+</div>
+{% endblock %}

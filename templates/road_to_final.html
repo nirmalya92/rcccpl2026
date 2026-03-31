@@ -1,0 +1,15 @@
+
+{% extends "base.html" %}
+{% block title %}{{ site.title }} • Road to Final{% endblock %}
+{% block content %}
+<section class="page-hero glass-card gold-edge">
+  <div class="card-label">Tournament Bracket</div>
+  <h1 class="poster-title heading-font">Road to Final</h1>
+  <p class="copy">A clean bracket-style journey through the knockout phase, from quarter final triumphs to the semi-final gateway and the final dream.</p>
+</section>
+<div class="road-grid">
+  {% for block in site.timeline %}
+  <div class="glass-card timeline-item"><h3 class="timeline-title">{{ block.title }}</h3>{% for line in block.lines %}<p class="timeline-line">{{ line }}</p>{% endfor %}</div>
+  {% endfor %}
+</div>
+{% endblock %}

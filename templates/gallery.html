@@ -1,0 +1,22 @@
+
+{% extends "base.html" %}
+{% block title %}{{ site.title }} • Gallery{% endblock %}
+{% block content %}
+<section class="page-hero glass-card gold-edge">
+  <div class="card-label">Visual Feed</div>
+  <h1 class="poster-title heading-font">Tournament Gallery</h1>
+  <p class="copy">Responsive masonry gallery with mobile-friendly tap behavior and lightbox preview. Drop real images into static/photos and they will appear automatically.</p>
+</section>
+{% if photos %}
+<div class="gallery-masonry">
+  {% for photo in photos %}
+  <div class="gallery-card gallery-item" data-title="{{ photo.title }}">
+    <img src="{{ url_for('static', filename='photos/' ~ photo.filename) }}" alt="{{ photo.title }}" loading="lazy">
+    <div class="gallery-caption">{{ photo.title }}</div>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<div class="card"><div class="card-icon">📸</div><h3 class="card-title">No Gallery Images Yet</h3><p class="card-text">Drop any .jpg, .jpeg, .png or .webp images into <strong>static/photos</strong>. This page will automatically pick them up.</p></div>
+{% endif %}
+{% endblock %}

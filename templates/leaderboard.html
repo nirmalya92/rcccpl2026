@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block title %}{{ site.title }} • Leaderboard{% endblock %}
+
+{% block content %}
+<section class="page-hero glass-card gold-edge">
+  <div class="card-label">Tournament Leaders</div>
+  <h1 class="poster-title heading-font">Leaderboard / Standout Players</h1>
+  <p class="copy">A premium performance board spotlighting the names shaping RCC CPL 2026 on the road to the final.</p>
+</section>
+
+<div class="glass-card feature-wide-card leaderboard-hero-card">
+  <div class="subsection-heading">⭐ MVP Leader</div>
+
+  <div class="hero-player">
+    <div class="player-avatar player-avatar-lg">
+      {% if site.leaderboard.mvp.image %}
+        <img src="{{ url_for('static', filename=site.leaderboard.mvp.image) }}" alt="{{ site.leaderboard.mvp.name }}">
+      {% else %}
+        {{ site.leaderboard.mvp.icon or "🏏" }}
+      {% endif %}
+    </div>
+
+    <div class="hero-player-content">
+      <div class="player-name">{{ site.leaderboard.mvp.name }}</div>
+      <div class="player-role">{{ site.leaderboard.mvp.team }}</div>
+      <p class="copy">{{ site.leaderboard.mvp.desc }}</p>
+
+      <div class="player-stats hero-stats">
+        {% for stat in site.leaderboard.mvp.stats %}
+        <div class="stat-item">
+          <div class="stat-value">{{ stat.value }}</div>
+          <div class="stat-name">{{ stat.label }}</div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="player-grid leaderboard-grid">
+  {% for player in site.leaderboard.standouts %}
+  <div class="player-card leaderboard-player-card">
+    <div class="player-avatar player-avatar-md">
+      {% if player.image %}
+        <img src="{{ url_for('static', filename=player.image) }}" alt="{{ player.name }}">
+      {% else %}
+        {{ player.icon }}
+      {% endif %}
+    </div>
+
+    <div class="player-name">{{ player.name }}</div>
+    <div class="player-role">{{ player.role }} • {{ player.note }}</div>
+
+    <div class="player-stats">
+      {% for stat in player.stats %}
+      <div class="stat-item">
+        <div class="stat-value">{{ stat.value }}</div>
+        <div class="stat-name">{{ stat.label }}</div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

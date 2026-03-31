@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% block title %}{{ site.title }} • Appreciation{% endblock %}
+
+{% block content %}
+<section class="appreciation-page">
+
+  <!-- HERO -->
+  <section class="appreciation-hero glass-card gold-edge">
+    <div class="hero-topline">RCC CPL 2026 • With Gratitude</div>
+    <h1 class="poster-title heading-font">Appreciation & Thanks</h1>
+    <div class="hero-divider"></div>
+    <p class="hero-copy">
+      Every match, every moment, every effort added meaning to this tournament.
+      This page stands as a mark of respect to the teams, captains, organizers,
+      officials, partners, supporters, and every hand that helped shape the story.
+    </p>
+
+    <div class="hero-tribute">
+      <span class="tribute-line"></span>
+      <p>
+        Cricket tournaments are not built only by runs, wickets, and results —
+        they are built by commitment, discipline, trust, teamwork, and presence.
+      </p>
+      <span class="tribute-line"></span>
+    </div>
+  </section>
+
+  <!-- HONOUR STRIP -->
+  <section class="honour-strip glass-card">
+    <div class="strip-label">Tournament Tribute</div>
+    <div class="strip-items">
+      <span>Teams</span>
+      <span>Captains</span>
+      <span>Players</span>
+      <span>Organizers</span>
+      <span>Umpires</span>
+      <span>Scorers</span>
+      <span>Ground Staff</span>
+      <span>Sponsors</span>
+      <span>Supporters</span>
+    </div>
+  </section>
+
+  <!-- APPRECIATION CARDS -->
+  <section class="appreciation-grid">
+    {% for block in site.appreciation_sections %}
+    <article class="appreciation-card glass-card">
+      <div class="appreciation-card-bg"></div>
+
+      <div class="appreciation-card-head">
+        <div class="card-icon-wrap">
+          <span class="card-icon">{{ block.emoji }}</span>
+        </div>
+        <div class="card-heading-group">
+          <div class="mini-label">Honour & Recognition</div>
+          <h3 class="card-title heading-font">{{ block.title }}</h3>
+        </div>
+      </div>
+
+      <div class="card-divider"></div>
+
+      <p class="card-text">
+        {{ block.text }}
+      </p>
+    </article>
+    {% endfor %}
+  </section>
+
+  <!-- CLOSING TRIBUTE -->
+  <section class="closing-tribute glass-card gold-edge">
+    <div class="closing-label">Final Word</div>
+    <h2 class="section-title heading-font">To Everyone Who Made It Matter</h2>
+    <p class="closing-copy">
+      Thank you for your time, your effort, your sportsmanship, and your belief in the journey.
+      The scoreboard records the result, but the spirit of the tournament is carried by the people behind it.
+    </p>
+    <p class="closing-copy strong">
+      RCC CPL 2026 stands taller because of every one of you.
+    </p>
+  </section>
+
+</section>
+{% endblock %}

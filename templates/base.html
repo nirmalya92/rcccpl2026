@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}{{ site.title }}{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="h-full">
+  <div class="champ-wrapper h-full w-full text-slate-100">
+    <div class="spot-glow glow-cyan one"></div>
+    <div class="spot-glow glow-gold two"></div>
+    <div class="spot-glow glow-red three"></div>
+    <div class="seam-mark seam-one"></div>
+
+    <header class="site-header">
+      <div class="header-topbar">
+        <div class="nav-shell header-shell topbar-shell">
+          <div class="topbar-left">
+            <div class="mini-tag">Official Tournament Presentation</div>
+          </div>
+          <div class="topbar-right">
+            <span class="topbar-meta">RCC Edition 2026</span>
+            <span class="topbar-dot"></span>
+            <span class="topbar-meta">Red Leather Tournament</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="header-main">
+        <div class="nav-shell header-shell mainbar-shell">
+          <a href="{{ url_for('home') }}" class="brand-home">
+            <div class="brand-mainline">
+              <img
+                src="{{ url_for('static', filename='images/rcc-logo.png') }}"
+                alt="RCC Logo"
+                class="brand-logo"
+              >
+              <div class="brand-copy">
+                <div class="heading-font brand-title">RCC CPL 2026</div>
+                <div class="brand-sub">Presented by Railvihar Cricket Club</div>
+              </div>
+            </div>
+          </a>
+
+          <button
+            id="menuToggle"
+            class="menu-toggle"
+            aria-label="Toggle menu"
+            aria-expanded="false"
+            aria-controls="mobileNav"
+            type="button"
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+
+          <nav class="desktop-nav" aria-label="Primary navigation">
+            {% for item in nav_links %}
+              <a class="nav-link {% if item.active %}active{% endif %}" href="{{ url_for(item.endpoint) }}">
+                {{ item.label }}
+              </a>
+            {% endfor %}
+          </nav>
+        </div>
+
+        <div id="mobileNav" class="mobile-nav" aria-label="Mobile navigation">
+          <div class="glass-card mobile-nav-inner">
+            {% for item in nav_links %}
+              <a class="nav-link {% if item.active %}active{% endif %}" href="{{ url_for(item.endpoint) }}">
+                {{ item.label }}
+              </a>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="main-shell">
+      {% block content %}{% endblock %}
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-shell">
+        <div class="glass-card footer-card">
+          <div class="footer-row">
+            <div>
+              <div class="heading-font footer-title">{{ site.full_title }}</div>
+              <p class="footer-note">Official presentation system for RCC Corporate Premier League 2026</p>
+            </div>
+            <a href="{{ url_for('home') }}" class="premium-btn footer-btn">Back to Home</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <div class="lightbox" id="lightbox">
+    <div class="lightbox-shell">
+      <img class="lightbox-image" id="lightboxImage" alt="">
+      <div class="lightbox-toolbar">
+        <div class="lightbox-title" id="lightboxTitle"></div>
+        <div class="lightbox-actions">
+          <button class="lightbox-btn" id="lightboxPrev" type="button">Prev</button>
+          <button class="lightbox-btn" id="lightboxNext" type="button">Next</button>
+          <button class="lightbox-btn" id="lightboxClose" type="button">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

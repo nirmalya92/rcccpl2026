@@ -1,0 +1,303 @@
+{% extends "base.html" %}
+{% block title %}{{ site.title }} • Home{% endblock %}
+{% block content %}
+<section class="hero-wrap">
+  <div class="hero-grid">
+    <div class="glass-card gold-edge hero-primary">
+      <div class="hero-badge">Championship Weekend</div>
+      <p class="hero-kicker">RCC CORPORATE PREMIER LEAGUE 2026</p>
+      <h1 class="hero-title heading-font">{{ site.tagline }}</h1>
+      <p class="hero-subtext">{{ site.subtext }}</p>
+      <p class="hero-support">{{ site.hero_support }}</p>
+      <div class="cta-row">
+        <a href="{{ url_for('semi_finals') }}" class="premium-btn btn-primary">📅 View Schedule</a>
+        <a href="#" class="premium-btn btn-secondary">📊 Live Scores</a>
+        <a href="#" class="premium-btn btn-secondary">🤝 Become a Sponsor</a>
+      </div>
+    </div>
+
+    <div class="glass-card hero-side">
+      <div class="card-label">Tournament Pulse</div>
+      <h2 class="heading-font side-heading">This Is Serious Cricket</h2>
+      <div class="metal-line"></div>
+      <p class="copy">
+        RCC CPL 2026 is built to look, feel, and operate like a premium championship presentation —
+        structured, competitive, and professionally organized.
+      </p>
+      <div class="side-mini-grid">
+        <div class="side-mini-card">
+          <div class="mini-card-label">Stage</div>
+          <div class="mini-card-value">Semi Finals</div>
+        </div>
+        <div class="side-mini-card">
+          <div class="mini-card-label">Venue</div>
+          <div class="mini-card-value">CVRAMAN</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-block">
+  <div class="stats-strip">
+    {% for stat in site.home_stats %}
+    <div class="glass-card stat-card">
+      <div class="stat-icon">{{ stat.icon }}</div>
+      <div class="stat-number">{{ stat.value }}</div>
+      <div class="stat-label">{{ stat.label }}</div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="section-block">
+  <div class="two-col">
+    <div class="glass-card section-card">
+      <div class="card-label">About The League</div>
+      <h2 class="section-title heading-font">{{ site.about.headline }}</h2>
+      <p class="copy">{{ site.about.text }}</p>
+      <div class="bullet-row">
+        {% for point in site.about.points %}
+        <span class="status-pill">{{ point }}</span>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="glass-card section-card">
+      <div class="card-label">Featured Match</div>
+      <h2 class="section-title heading-font">{{ site.featured_match.title }}</h2>
+      <div class="fixture-chip">
+        <div class="fixture-main">{{ site.featured_match.teams }}</div>
+        <div class="fixture-meta">{{ site.featured_match.time }} • {{ site.featured_match.ground }}</div>
+      </div>
+      <div class="countdown-note">{{ site.featured_match.countdown_note }}</div>
+    </div>
+  </div>
+</section>
+
+<section class="section-block">
+  <div class="glass-card section-card">
+    <div class="card-label">Live Action</div>
+    <h2 class="section-title heading-font">Keep The Site Alive</h2>
+    <div class="three-col">
+      <div class="sub-card">
+        <h3 class="sub-heading">🔴 Live Match</h3>
+        <p class="copy">
+          <strong>{{ site.live_action.live_match.status }}</strong><br>
+          {{ site.live_action.live_match.detail }}
+        </p>
+      </div>
+
+      <div class="sub-card">
+        <h3 class="sub-heading">📊 Recent Results</h3>
+        <ul class="clean-list">
+          {% for item in site.live_action.recent_results %}
+          <li>{{ item }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <div class="sub-card">
+        <h3 class="sub-heading">🏆 Top 4 + Highlights</h3>
+        <ul class="clean-list compact">
+          {% for team in site.live_action.top4 %}
+          <li>#{{ team.rank }} {{ team.team }}</li>
+          {% endfor %}
+        </ul>
+        <div class="media-pills">
+          {% for item in site.live_action.videos %}
+          <span class="status-pill">{{ item }}</span>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-block">
+  <div class="glass-card section-card">
+    <div class="card-label">Schedule Preview</div>
+    <h2 class="section-title heading-font">Next Fixtures</h2>
+    <div class="stack-list">
+      {% for item in site.schedule_preview %}
+      <div class="fixture-chip">
+        <div class="fixture-main">{{ item.match }}</div>
+        <div class="fixture-meta">{{ item.time }} • {{ item.ground }}</div>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="top-space">
+      <a href="{{ url_for('semi_finals') }}" class="premium-btn btn-secondary">View Full Schedule</a>
+    </div>
+  </div>
+</section>
+
+<section class="section-block">
+  <div class="glass-card section-card">
+    <div class="card-label">Teams Showcase</div>
+    <h2 class="section-title heading-font">League Identity</h2>
+    <p class="copy team-showcase-copy">
+      Fifteen teams. One premium red leather league. Explore the competing identities of RCC CPL 2026 one team at a time.
+    </p>
+
+    <div class="team-spotlight-shell">
+      <button class="team-nav-btn team-nav-prev" type="button" id="teamPrevBtn" aria-label="Previous team">‹</button>
+
+      <div class="team-spotlight-center">
+        <div class="team-spotlight-frame">
+          <img
+            id="teamSpotlightImage"
+            src="{{ url_for('static', filename='team_cards/' ~ site.team_showcase_cards[0].file) }}"
+            alt="{{ site.team_showcase_cards[0].name }}"
+            class="team-spotlight-image"
+          >
+        </div>
+
+        <div class="team-spotlight-meta">
+          <div class="team-spotlight-count" id="teamSpotlightCount">
+            01 / {{ "%02d"|format(site.team_showcase_cards|length) }}
+          </div>
+          <div class="team-spotlight-name" id="teamSpotlightName">
+            {{ site.team_showcase_cards[0].name }}
+          </div>
+        </div>
+      </div>
+
+      <button class="team-nav-btn team-nav-next" type="button" id="teamNextBtn" aria-label="Next team">›</button>
+    </div>
+  </div>
+</section>
+
+<section class="section-block">
+  <div class="three-col">
+    {% for card in site.media_cards %}
+    <a
+      href="{{ card.url }}"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="glass-card media-card section-card media-link-card"
+    >
+      <div class="card-label">Media & Highlights</div>
+      <h3 class="sub-heading">{{ card.title }}</h3>
+      <p class="copy">{{ card.text }}</p>
+      <div class="media-link-tag">{{ card.link_label }}</div>
+    </a>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="section-block">
+  <div class="glass-card section-card">
+    <div class="card-label">Our Partners</div>
+    <h2 class="section-title heading-font">Official Sponsors & Partners</h2>
+    <p class="copy sponsor-copy">
+      RCC CPL 2026 is proud to be supported by partners who believe in premium corporate cricket, community, and a professionally managed red leather tournament experience.
+    </p>
+
+    <div class="sponsor-logo-grid">
+      {% for sponsor in site.sponsors %}
+      <div class="sponsor-logo-card">
+        <div class="sponsor-logo-frame">
+          <img
+            src="{{ url_for('static', filename='sponsors/' ~ sponsor.file) }}"
+            alt="{{ sponsor.name }}"
+            class="sponsor-logo-image"
+            loading="lazy"
+          >
+        </div>
+        <div class="sponsor-role">{{ sponsor.role }}</div>
+        <div class="sponsor-name">{{ sponsor.name }}</div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section-block">
+  <div class="two-col">
+    <div class="glass-card section-card">
+      <div class="card-label">Announcements / Updates</div>
+      <h2 class="section-title heading-font">Official Notices</h2>
+      <ul class="clean-list">
+        {% for item in site.announcements %}
+        <li>{{ item }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <div class="glass-card section-card">
+      <div class="card-label">Contact / Final CTA</div>
+      <h2 class="section-title heading-font">Join / Partner With Us</h2>
+      <div class="contact-block">
+        <div><strong>Organizer:</strong> {{ site.contact.name }}</div>
+        <div><strong>Phone:</strong> {{ site.contact.phone }}</div>
+        <div><strong>Email:</strong> {{ site.contact.email }}</div>
+      </div>
+      <div class="top-space">
+        <a href="#" class="premium-btn btn-primary">{{ site.contact.cta }}</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const spotlightImage = document.getElementById("teamSpotlightImage");
+  const spotlightName = document.getElementById("teamSpotlightName");
+  const spotlightCount = document.getElementById("teamSpotlightCount");
+  const prevBtn = document.getElementById("teamPrevBtn");
+  const nextBtn = document.getElementById("teamNextBtn");
+
+  const teams = [
+    {% for team in site.team_showcase_cards %}
+    {
+      name: {{ team.name|tojson }},
+      file: {{ url_for('static', filename='team_cards/' ~ team.file)|tojson }}
+    }{% if not loop.last %},{% endif %}
+    {% endfor %}
+  ];
+
+  let currentIndex = 0;
+
+  function formatCount(index, total) {
+    const current = String(index + 1).padStart(2, "0");
+    const max = String(total).padStart(2, "0");
+    return `${current} / ${max}`;
+  }
+
+  function renderTeam(index) {
+    const team = teams[index];
+    if (!team) return;
+
+    currentIndex = index;
+    spotlightImage.src = team.file;
+    spotlightImage.alt = team.name;
+    spotlightName.textContent = team.name;
+    spotlightCount.textContent = formatCount(index, teams.length);
+  }
+
+  prevBtn.addEventListener("click", () => {
+    const nextIndex = (currentIndex - 1 + teams.length) % teams.length;
+    renderTeam(nextIndex);
+  });
+
+  nextBtn.addEventListener("click", () => {
+    const nextIndex = (currentIndex + 1) % teams.length;
+    renderTeam(nextIndex);
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowLeft") {
+      const nextIndex = (currentIndex - 1 + teams.length) % teams.length;
+      renderTeam(nextIndex);
+    }
+    if (e.key === "ArrowRight") {
+      const nextIndex = (currentIndex + 1) % teams.length;
+      renderTeam(nextIndex);
+    }
+  });
+
+  renderTeam(0);
+});
+</script>
+{% endblock %}

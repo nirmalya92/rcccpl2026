@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{% block title %}{{ site.title }} • QF Results{% endblock %}
+
+{% block content %}
+<section class="page-hero glass-card gold-edge qf-hero">
+  <div class="card-label">Knockout Match Centre</div>
+  <h1 class="poster-title heading-font">Quarter Final Results</h1>
+  <p class="copy">
+    Four quarter-finals. Four match-winning performances. Click into each battle to explore
+    the result, the Player of the Match, the full scorecard, and the live replay coverage.
+  </p>
+
+  <div class="qf-hero-pills">
+    <div class="qf-hero-pill">
+      <span class="qf-hero-pill-label">Matches</span>
+      <span class="qf-hero-pill-value">4</span>
+    </div>
+    <div class="qf-hero-pill">
+      <span class="qf-hero-pill-label">Qualified Teams</span>
+      <span class="qf-hero-pill-value">4</span>
+    </div>
+    <div class="qf-hero-pill">
+      <span class="qf-hero-pill-label">MOM Awards</span>
+      <span class="qf-hero-pill-value">4</span>
+    </div>
+    <div class="qf-hero-pill">
+      <span class="qf-hero-pill-label">Replay Access</span>
+      <span class="qf-hero-pill-value">Available</span>
+    </div>
+  </div>
+</section>
+
+<div class="qf-accordion-list">
+  {% for qf in site.qf_results %}
+  <details class="glass-card qf-accordion-card" {% if loop.first %}open{% endif %}>
+    <summary class="qf-accordion-summary">
+      <div class="qf-summary-top">
+        <div class="qf-summary-meta">{{ qf.tag }} • {{ qf.meta }}</div>
+        <div class="qf-summary-openhint">View Match Details</div>
+      </div>
+
+      <div class="qf-summary-main">
+        <div class="qf-summary-team qf-summary-team-left">
+          <div class="qf-summary-team-name {{ 'winner-name' if qf.winner_side == 'left' }}">{{ qf.team1 }}</div>
+          <div class="qf-summary-score">{{ qf.team1_score }}</div>
+        </div>
+
+        <div class="qf-summary-center">
+          <div class="qf-summary-vs">VS</div>
+        </div>
+
+        <div class="qf-summary-team qf-summary-team-right">
+          <div class="qf-summary-team-name {{ 'winner-name' if qf.winner_side == 'right' }}">{{ qf.team2 }}</div>
+          <div class="qf-summary-score">{{ qf.team2_score }}</div>
+        </div>
+      </div>
+
+      <div class="qf-summary-bottom">
+        <div class="qf-summary-result">
+          <span class="qf-result-label">Result</span>
+          <span class="qf-result-text">{{ qf.summary }}</span>
+        </div>
+        <div class="qf-summary-mom">
+          <span class="qf-mom-mini-label">Man of the Match</span>
+          <span class="qf-mom-mini-name">{{ qf.mom.name }}</span>
+        </div>
+      </div>
+    </summary>
+
+    <div class="qf-accordion-content">
+      <div class="qf-content-grid">
+        <div class="qf-spotlight-card">
+          <div class="mom-label">Man of the Match</div>
+          <h3 class="mom-name">{{ qf.mom.name }}</h3>
+          <p class="qf-mom-performance">
+            {{ qf.mom.performance }}
+          </p>
+        </div>
+
+        <div class="qf-links-panel">
+          <a href="{{ qf.mom.profile_url }}" target="_blank" rel="noopener" class="premium-btn btn-secondary mini-btn qf-action-btn">
+            CricHeroes Profile
+          </a>
+
+          <a href="{{ qf.match_link }}" target="_blank" rel="noopener" class="premium-btn btn-primary mini-btn qf-action-btn">
+            Match Summary
+          </a>
+
+          {% if qf.youtube_links|length == 1 %}
+          <a href="{{ qf.youtube_links[0] }}" target="_blank" rel="noopener" class="premium-btn btn-secondary mini-btn qf-action-btn">
+            YouTube Live
+          </a>
+          {% else %}
+            {% for yt in qf.youtube_links %}
+            <a href="{{ yt }}" target="_blank" rel="noopener" class="premium-btn btn-secondary mini-btn qf-action-btn">
+              YouTube Live {{ loop.index }}
+            </a>
+            {% endfor %}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </details>
+  {% endfor %}
+</div>
+
+<section class="glass-card qf-transition-card">
+  <div class="card-label">Road Ahead</div>
+  <h2 class="section-title heading-font">The Field Narrows</h2>
+  <p class="copy">
+    The quarter-finals delivered four defining performances. The road now tightens toward the semi-finals,
+    where every spell, every partnership, and every decision carries championship weight.
+  </p>
+</section>
+{% endblock %}
